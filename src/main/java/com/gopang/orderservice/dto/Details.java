@@ -2,19 +2,9 @@ package com.gopang.orderservice.dto;
 
 import com.gopang.orderservice.domain.OrderState;
 import com.gopang.orderservice.domain.Orders;
-import com.gopang.orderservice.domain.PaymentStatus;
 import lombok.Builder;
-import lombok.Getter;
 
-public class History {
-
-    @Getter
-    @Builder
-    public static class HistoryRequest {
-        public PaymentStatus paymentStatus;
-
-        public Long orderId;
-    }
+public class Details {
 
     @Builder
     public static class HistoryResponse {
@@ -33,6 +23,18 @@ public class History {
 
         // 주문상태
         public OrderState order_state;
+
+        @Override
+        public String toString() {
+            return "HistoryResponse{" +
+                    "id=" + id +
+                    ", user_id=" + user_id +
+                    ", item_id=" + item_id +
+                    ", order_amount=" + order_amount +
+                    ", orders=" + orders +
+                    ", order_state=" + order_state +
+                    '}';
+        }
     }
 
 }

@@ -1,9 +1,6 @@
 package com.gopang.orderservice.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,9 +25,12 @@ public class Orders {
 
     public Long user_id;
 
-    public Long cartitem_id;
-
+    // 총 주문금액
     public Long amount;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "orders")
+    public List<OrderDetails> orderHistory = new ArrayList<>();
 
     public String reciever_name;
 
@@ -39,5 +41,10 @@ public class Orders {
     public String deleteYn;
 
     public LocalDateTime time;
+
+    // 주문 상태
+    @Column
+    @Enumerated(EnumType.STRING)
+    public OrderState order_state;
 
 }
