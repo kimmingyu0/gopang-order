@@ -51,8 +51,17 @@ services:
     depends_on:
       - zookeeper
 
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      backend:
+        aliases:
+          - "zipkin-server"
+
   orderservice:
-    image: kimmingyu0/orderservice:0.0.2-SNAPSHOT
+    image: gopang/orderserver:0.0.2-SNAPSHOT
     environment:
       DATABASESERVER_PORT: "3306"
     depends_on:
@@ -67,7 +76,7 @@ services:
       - backend
 
   gopangpayment:
-    image: gopangpayment:0.0.1
+    image: gopang/paymentserver:0.0.1-SNAPSHOT
     container_name: gopangpayment
     environment:
       PROFILE: "dev"
@@ -80,7 +89,7 @@ services:
     networks:
       - backend
   gopangitems:
-    image: gopang/itemserver:0.0.1-SNAPSHOT
+    image: gopang/gopang-itemserver:0.0.1-SNAPSHOT
     ports:
       - "8989:8989"
     networks:
