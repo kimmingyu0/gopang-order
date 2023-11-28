@@ -7,9 +7,9 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ResPayOrder {
+    // 주문 고유 번호
+    public String order_id;
+
     // 결제 상태
     public PaymentStatus paymentStatus;
-
-    // 주문 고유 번호
-    public Long orderId;
 }

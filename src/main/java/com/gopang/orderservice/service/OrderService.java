@@ -11,6 +11,7 @@ import com.gopang.orderservice.message.payment.ReqPayOrder;
 import com.gopang.orderservice.message.payment.ResPayOrder;
 import com.gopang.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
@@ -29,6 +30,7 @@ import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -41,7 +43,7 @@ public class OrderService {
 
     @Bean
     public Consumer<ResPayOrder> consumerBinding() {
-        return pay -> stateUpdate(pay.getOrderId(), pay.getPaymentStatus());
+        return pay -> stateUpdate(Long.valueOf(pay.getOrder_id()), pay.getPaymentStatus());
     }
 
     // 주문 요청
@@ -119,7 +121,6 @@ public class OrderService {
 
     // 주문 상태 업데이트
     public void stateUpdate (Long orderId, PaymentStatus status) {
-        System.out.println(status);
         Optional<Orders> history = orderRepository.findById(orderId);
 
         Orders orders;
